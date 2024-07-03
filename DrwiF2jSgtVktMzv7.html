@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://websim.ai/love-letters" />
+<title>Digital Love Letters</title>
+<style>
+  body {
+    font-family: 'Bell MT', cursive;
+    background-color: #fff5f5;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><path d="M30,50 Q50,20 70,50 T30,50" fill="none" stroke="rgba(255,107,107,0.2)" stroke-width="2"/></svg>');
+    background-size: 100px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  h1 {
+    color: #ff6b6b;
+    font-size: 3em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+  .letter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    max-width: 1500px;
+  }
+  .letter {
+    width: 220px;
+    height: 220px;
+    background-color: #ffb8b8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    color: #ff4757;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    flex-direction: column; /* Allowing for stacked content */
+    text-align: center;
+  }
+  .letter:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+  }
+  .letter-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 0.5em; /* Adjusted font size for better readability */
+    color: #ff4757;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .letter.open .letter-content {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .letter-label {
+    position: absolute;
+    bottom: 3px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.4em; /* Adjusted font size */
+    /* color: #ff6b6b; */
+    color: #b12626;
+    transition: opacity 0.3s ease;
+    opacity: 0.5;
+  }
+  .letter.open .letter-label {
+    opacity: 0; /* Hide the label when the letter is opened */
+  }
+  @keyframes unfold {
+    0% { transform: scaleY(0.1) rotate(0deg); }
+    50% { transform: scaleY(0.5) rotate(180deg); }
+    100% { transform: scaleY(1) rotate(360deg); }
+  }
+  .letter.open {
+    animation: unfold 0.8s ease forwards;
+  }
+
+
+  .letter-label strong {
+    font-weight: bold; /* Make bold text actually bold */
+  }
+  .floating-heart {
+    position: absolute;
+    font-size: 20px;
+    color: #ff6b6b;
+    pointer-events: none;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+</style>
+</head>
+<body>
+  <h1>To my future wife</h1>
+  <h2>Press when you: </h2>
+  <div class="letter-container">
+    <div class="letter" onclick="toggleLetter(this)">
+      M
+      <div class="letter-content">We'll be together soon, ania. This is our long distance relationship.</div>
+      <div class="letter-label">When You <strong>Miss Me</strong></div>
+
+    </div>
+    <div class="letter" onclick="toggleLetter(this)">
+      A
+      <div class="letter-content">Drink water and know I'm holding you with my thoughts.</div>
+      <div class="letter-label">When You Feel Anxious</div>
+    </div>
+    <div class="letter" onclick="toggleLetter(this)">
+      T
+      <div class="letter-content">Close your eyes and imagine my arms around you, holding you tight.</div>
+      <div class="letter-label">When You’re Tired</div>
+    </div>
+    <div class="letter" onclick="toggleLetter(this)">
+      C
+      <div class="letter-content">Just send me a message or call me. No matter where I am, I'll do my best to pick up and be there for you.</div>
+      <div class="letter-label">When You Crave Connection</div>
+    </div>
+    <div class="letter" onclick="toggleLetter(this)">
+      H
+      <div class="letter-content">Look at the stars, and know that every single one is a promise of our love.</div>
+      <div class="letter-label">When You Feel Hopeless</div>
+    </div>
+    <div class="letter" onclick="toggleLetter(this)">
+      A
+      <div class="letter-content">I’m so proud of you. Your successes are worth celebrating together, soon.</div>
+      <div class="letter-label">When You Achieve Something</div>
+    </div>
+  </div>
+
+<script>
+function toggleLetter(element) {
+  const openLetter = document.querySelector('.letter.open');
+  if (openLetter && openLetter !== element) {
+    openLetter.classList.remove('open');
+  }
+  element.classList.toggle('open');
+  if (element.classList.contains('open')) {
+    createFloatingHearts(element);
+  }
+}
+
+function createFloatingHearts(element) {
+  for (let i = 0; i < 5; i++) {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤';
+    heart.classList.add('floating-heart');
+    heart.style.position = 'absolute';
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.top = `${Math.random() * 100}%`;
+    heart.style.animationDelay = `${Math.random() * 2}s`;
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 4000);
+  }
+}
+</script>
+</body>
+</html>
